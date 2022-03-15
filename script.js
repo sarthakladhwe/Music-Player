@@ -45,7 +45,20 @@ function pauseSong() {
     audio.pause()
 }
 
+// Update prgoress bar
+function updateProgress(event) {
+    const { duration, currentTime } = event.srcElement;
+    const progressPercent = (currentTime / duration) * 100;
+    progress.style.width = `${progressPercent}%`
+}
 
+function setProgress(event) {
+    const width = this.clientWidth;
+    const clickX = event.offsetX;
+    const duration = audio.duration;
+
+    audio.currentTime = (clickX / width) * duration;
+}
 
 // Event Listeners
 playBtn.addEventListener('click',() => {
@@ -72,6 +85,25 @@ prevBtn.addEventListener('click', () => {
 })
 
 nextBtn.addEventListener('click', () => {
+    songIndex++;
+
+    if(songIndex === songs.length) {
+        songIndex = 0
+    }
+
+    loadSong(songs[songIndex])
+
+    playSong()
+})
+
+// Timesong update event
+audio.addEventListener('timeupdate', updateProgress)
+
+//Click on progress bar
+progressContainer.addEventListener('click', setProgress)
+
+//Song ends
+audio.addEventListener('ended', () => {
     songIndex++;
 
     if(songIndex === songs.length) {
