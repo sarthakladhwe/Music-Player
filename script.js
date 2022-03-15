@@ -57,3 +57,28 @@ playBtn.addEventListener('click',() => {
         playSong()
     }
 })
+
+// Change Song
+prevBtn.addEventListener('click', () => {
+    if(songIndex === 0) {
+        songIndex = songs.length - 1
+    } else {
+        songIndex--
+    }
+
+    loadSong(songs[songIndex])
+
+    playSong()
+})
+
+nextBtn.addEventListener('click', () => {
+    songIndex++;
+
+    if(songIndex === songs.length) {
+        songIndex = 0
+    }
+
+    loadSong(songs[songIndex])
+
+    playSong()
+})
